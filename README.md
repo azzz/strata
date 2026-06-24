@@ -1,0 +1,3 @@
+# Strata
+
+Embedded OLAP Engine
