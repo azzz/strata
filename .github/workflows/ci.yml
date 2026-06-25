@@ -10,9 +10,15 @@ concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   lint:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,6 +34,7 @@ jobs:
         uses: golangci/golangci-lint-action@v8
         with:
           version: v2.12.2
+          problem-matchers: true
 
   test:
     runs-on: ubuntu-latest
@@ -43,4 +50,21 @@ jobs:
           cache-dependency-path: go.mod
 
       - name: Run unit tests
-        run: go test ./...
+        shell: bash
+        run: |
+          set -o pipefail
+
+          output_file="$(mktemp)"
+          go test ./... 2>&1 | tee "$output_file"
+          status=${PIPESTATUS[0]}
+
+          while IFS= read -r line; do
+            if [[ "$line" =~ ^([^:[:space:]]+\.go):([0-9]+):[[:space:]](.*)$ ]]; then
+              file="${BASH_REMATCH[1]}"
+              line_no="${BASH_REMATCH[2]}"
+              message="${BASH_REMATCH[3]}"
+              echo "::error file=${file},line=${line_no}::${message}"
+            fi
+          done < "$output_file"
+
+          exit "$status"
