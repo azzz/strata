@@ -50,21 +50,4 @@ jobs:
           cache-dependency-path: go.mod
 
       - name: Run unit tests
-        shell: bash
-        run: |
-          set -o pipefail
-
-          output_file="$(mktemp)"
-          go test ./... 2>&1 | tee "$output_file"
-          status=${PIPESTATUS[0]}
-
-          while IFS= read -r line; do
-            if [[ "$line" =~ ^([^:[:space:]]+\.go):([0-9]+):[[:space:]](.*)$ ]]; then
-              file="${BASH_REMATCH[1]}"
-              line_no="${BASH_REMATCH[2]}"
-              message="${BASH_REMATCH[3]}"
-              echo "::error file=${file},line=${line_no}::${message}"
-            fi
-          done < "$output_file"
-
-          exit "$status"
+        run: go test ./...
