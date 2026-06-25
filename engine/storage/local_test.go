@@ -12,10 +12,12 @@ func TestLocalStorage_NewScanner(t *testing.T) {
 	type fields struct {
 		RootDir string
 	}
+
 	type args struct {
 		ctx context.Context
 		req ScanRequest
 	}
+
 	tests := []struct {
 		name    string
 		fields  fields
@@ -50,16 +52,19 @@ func TestLocalStorage_NewScanner(t *testing.T) {
 			},
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			s := &LocalStorage{
 				RootDir: tt.fields.RootDir,
 			}
 			got, err := s.NewScanner(tt.args.ctx, tt.args.req)
+
 			if (err != nil) != tt.wantErr {
 				t.Errorf("LocalStorage.NewScanner() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
+
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("LocalStorage.NewScanner() = %v, want %v", got, tt.want)
 			}

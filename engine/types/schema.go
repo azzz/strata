@@ -18,6 +18,7 @@ func (s Schema) GetColumn(name string) (Column, int) {
 			return field, i
 		}
 	}
+
 	return Column{}, -1
 }
 
@@ -26,6 +27,7 @@ func (s Schema) GetColumnByIndex(index int) (Column, bool) {
 	if index < 0 || index >= len(s.columns) {
 		return Column{}, false
 	}
+
 	return s.columns[index], true
 }
 

@@ -24,5 +24,5 @@ func (s *LocalStorage) NewScanner(ctx context.Context, req ScanRequest) (Scanner
 		return scanner, nil
 	}
 
-	return nil, nil
+	return nil, fmt.Errorf("unsupported format: %s", req.Format)
 }

@@ -16,6 +16,7 @@ func (r Row) Get(idx int) (Value, bool) {
 	if idx < 0 || idx >= len(r.values) {
 		return Value{}, false
 	}
+
 	return r.values[idx], true
 }
 
@@ -24,6 +25,7 @@ func (r Row) Set(idx int, value Value) {
 	if idx < 0 || idx >= len(r.values) {
 		return
 	}
+
 	r.values[idx] = value
 }
 
@@ -43,5 +45,6 @@ func (r Row) GetValueByColumn(schema Schema, columnName string) (Value, bool) {
 	if idx == -1 {
 		return Value{}, false
 	}
+
 	return r.Get(idx)
 }

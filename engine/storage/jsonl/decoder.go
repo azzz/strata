@@ -3,6 +3,7 @@ package jsonl
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 
 	"github.com/azzz/strata/engine/types"
 )
@@ -27,7 +28,7 @@ func (d *Decoder) Decode(data []byte) (types.Row, error) {
 	decoder.UseNumber()
 
 	if err := decoder.Decode(&fields); err != nil {
-		return types.Row{}, err
+		return types.Row{}, fmt.Errorf("failed to decode json: %w", err)
 	}
 
 	row := types.NewRow(d.schema.Len())
@@ -92,6 +93,7 @@ func (d *Decoder) decodeValue(name string, kind types.Kind, raw any) (types.Valu
 					Expected: types.KindFloat64,
 				}
 			}
+
 			return types.NewFloat64Value(val), nil
 		}
 	case types.KindBool:
@@ -112,6 +114,30 @@ func (d *Decoder) decodeValue(name string, kind types.Kind, raw any) (types.Valu
 		} else {
 			return types.NewNullValue(), nil
 		}
+	case types.KindUInt64:
+		if n, ok := raw.(json.Number); !ok {
+			return types.NewNullValue(), &types.TypeError{
+				Field:    name,
+				Expected: types.KindUInt64,
+			}
+		} else {
+			val, err := n.Int64()
+			if err != nil || val < 0 {
+				return types.NewNullValue(), &types.TypeError{
+					Field:    name,
+					Expected: types.KindUInt64,
+				}
+			}
+
+			return types.NewUInt64Value(uint64(val)), nil
+		}
+
+	case types.KindTimestamp:
+		return types.NewNullValue(), &types.TypeNotImplementedError{
+			Field: name,
+			Kind:  kind,
+		}
+
 	default:
 		return types.NewNullValue(), &types.TypeError{
 			Field:    name,

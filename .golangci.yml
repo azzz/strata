@@ -1,0 +1,27 @@
+version: "2"
+
+run:
+  timeout: 2m
+  tests: true
+
+linters:
+  default: none
+  enable:
+    - copyloopvar
+    - errcheck
+    - errorlint
+    - exhaustive
+    - goconst
+    - govet
+    - ineffassign
+    - nilnil
+    - staticcheck
+    - unused
+    - wrapcheck
+    - wsl_v5
+
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - goconst

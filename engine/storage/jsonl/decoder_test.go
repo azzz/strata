@@ -147,7 +147,6 @@ func TestJSONDecoder_decodeValue(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -160,6 +159,7 @@ func TestJSONDecoder_decodeValue(t *testing.T) {
 				if err != nil {
 					t.Fatalf("decodeValue() error = %v, want nil", err)
 				}
+
 				return
 			}
 
@@ -229,7 +229,6 @@ func TestJSONDecoder_Decode(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -240,6 +239,7 @@ func TestJSONDecoder_Decode(t *testing.T) {
 				if err == nil {
 					t.Fatal("Decode() error = nil, want non-nil")
 				}
+
 				return
 			}
 
@@ -256,6 +256,7 @@ func TestJSONDecoder_Decode(t *testing.T) {
 				if *typeErr != *tt.wantTypeErr {
 					t.Fatalf("Decode() type error = %#v, want %#v", *typeErr, *tt.wantTypeErr)
 				}
+
 				return
 			}
 
@@ -268,6 +269,7 @@ func TestJSONDecoder_Decode(t *testing.T) {
 				if !ok {
 					t.Fatalf("Decode() row missing value at index %d", i)
 				}
+
 				if value != want {
 					t.Fatalf("Decode() row[%d] = %#v, want %#v", i, value, want)
 				}

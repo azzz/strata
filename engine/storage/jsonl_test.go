@@ -23,6 +23,7 @@ func TestJSONLScanner_Integration(t *testing.T) {
 	if err := scanner.Open(); err != nil {
 		t.Fatalf("Open() error = %v", err)
 	}
+
 	defer func() {
 		if err := scanner.Close(); err != nil {
 			t.Fatalf("Close() error = %v", err)
@@ -59,6 +60,7 @@ func TestJSONLScanner_Integration(t *testing.T) {
 			if !ok {
 				t.Fatalf("Row().Get(%d) = !ok at row %d", columnIndex, rowIndex)
 			}
+
 			if gotValue != wantValue {
 				t.Fatalf("Row().Get(%d) = %#v at row %d, want %#v", columnIndex, gotValue, rowIndex, wantValue)
 			}

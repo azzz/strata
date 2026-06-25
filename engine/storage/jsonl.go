@@ -36,7 +36,7 @@ func NewJSONLScanner(path string, schema types.Schema) *JSONLScanner {
 func (s *JSONLScanner) Open() error {
 	file, err := os.Open(string(s.path))
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to open file: %w", err)
 	}
 
 	s.file = file
@@ -66,13 +66,15 @@ func (s *JSONLScanner) Next(ctx context.Context) bool {
 		if err := s.scanner.Err(); err != nil {
 			s.err = fmt.Errorf("failed to read next line: %w", err)
 		}
+
 		return false
 	}
 
 	line := s.scanner.Bytes()
+
 	row, err := s.decoder.Decode(line)
 	if err != nil {
-		s.err = fmt.Errorf("failed to decode row: %v", err)
+		s.err = fmt.Errorf("failed to decode row: %w", err)
 		return false
 	}
 
@@ -97,5 +99,10 @@ func (s *JSONLScanner) Close() error {
 	if s.file == nil {
 		return nil
 	}
-	return s.file.Close()
+
+	if err := s.file.Close(); err != nil {
+		return fmt.Errorf("failed to close file handler: %w", err)
+	}
+
+	return nil
 }
