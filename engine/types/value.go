@@ -49,6 +49,7 @@ func (v Value) IsBool() bool {
 }
 
 func NewStringValue(s string) Value {
+
 	return Value{
 		Kind: KindString,
 		S:    s,
