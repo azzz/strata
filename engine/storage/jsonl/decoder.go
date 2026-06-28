@@ -134,8 +134,7 @@ func (d *Decoder) decodeValue(name string, kind types.Kind, raw any) (types.Valu
 
 	case types.KindTimestamp:
 		return types.NewNullValue(), &types.TypeError{
-			Field:    name,
-			Expected: kind,
+			Field: name,
 		}
 
 	default:

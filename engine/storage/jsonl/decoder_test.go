@@ -140,8 +140,7 @@ func TestJSONDecoder_decodeValue(t *testing.T) {
 			raw:   "2024-01-01T00:00:00Z",
 			want:  types.NewNullValue(),
 			wantTypeErr: &types.TypeError{
-				Field:    "created_at",
-				Expected: types.KindTimestamp,
+				Field: "created_at",
 			},
 		},
 	}
