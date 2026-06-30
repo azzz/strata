@@ -33,15 +33,15 @@ func (m *mockStorage) NewScanner(ctx context.Context, req storage.ScanRequest) (
 }
 
 type mockScanner struct {
-	rows      []types.Row
-	nextErr   error
-	openErr   error
-	closeErr  error
-	cursor    int
-	openCalls int
+	rows       []types.Row
+	nextErr    error
+	openErr    error
+	closeErr   error
+	cursor     int
+	openCalls  int
 	closeCalls int
-	row       types.Row
-	err       error
+	row        types.Row
+	err        error
 }
 
 func (m *mockScanner) Open() error {
@@ -54,6 +54,7 @@ func (m *mockScanner) Next(ctx context.Context) bool {
 		if m.nextErr != nil {
 			m.err = m.nextErr
 		}
+
 		return false
 	}
 

@@ -42,6 +42,7 @@ func (f *Filter) Next(ctx context.Context) bool {
 		}
 
 		f.row = row
+
 		return true
 	}
 

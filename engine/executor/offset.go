@@ -43,5 +43,6 @@ func (o *Offset) Next(ctx context.Context) bool {
 	}
 
 	o.row = o.input.Row()
+
 	return true
 }

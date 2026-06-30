@@ -12,6 +12,7 @@ func (a *And) Match(row types.Row) (bool, error) {
 		if err != nil {
 			return false, err
 		}
+
 		if !ok {
 			return false, nil
 		}
@@ -30,6 +31,7 @@ func (o *Or) Match(row types.Row) (bool, error) {
 		if err != nil {
 			return false, err
 		}
+
 		if ok {
 			return true, nil
 		}

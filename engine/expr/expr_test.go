@@ -12,10 +12,11 @@ import (
 func TestComparisonFilters(t *testing.T) {
 	t.Parallel()
 
-	row := types.NewRow(3)
+	row := types.NewRow(4)
 	row.Set(0, types.NewInt64Value(10))
 	row.Set(1, types.NewStringValue("beta"))
 	row.Set(2, types.NewBoolValue(true))
+	row.Set(3, types.NewNullValue())
 
 	tests := []struct {
 		name   string
@@ -31,6 +32,11 @@ func TestComparisonFilters(t *testing.T) {
 			name:   "eq returns false for different value",
 			filter: &Eq{Col: 1, Value: types.NewStringValue("alpha")},
 			want:   false,
+		},
+		{
+			name:   "eq matches null value",
+			filter: &Eq{Col: 3, Value: types.NewNullValue()},
+			want:   true,
 		},
 		{
 			name:   "greater than matches larger value",

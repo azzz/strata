@@ -46,6 +46,7 @@ func (m *MockOperator) Close() error   { return nil }
 func (m *MockOperator) Next(ctx context.Context) bool {
 	for m.cursor < len(m.source) {
 		fetcher := m.source[m.cursor]
+
 		row, err := fetcher.row, fetcher.err
 		if err != nil {
 			m.err = err
@@ -53,6 +54,7 @@ func (m *MockOperator) Next(ctx context.Context) bool {
 		} else {
 			m.row = row
 			m.cursor++
+
 			return true
 		}
 	}
