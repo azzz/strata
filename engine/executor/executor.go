@@ -43,7 +43,7 @@ func (e Executor) Exec(ctx context.Context) Operator {
 		root = NewOffset(root, e.Plan.Offset)
 	}
 
-	if e.Plan.Limit > 9 {
+	if e.Plan.Limit > 0 {
 		root = NewLimit(root, e.Plan.Limit)
 	}
 
