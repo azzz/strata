@@ -1,5 +1,7 @@
 package types
 
+import "time"
+
 // Kind represents the data type of a Value. It can be one of several predefined types, such as string, int64, uint64, float64 etc.
 type Kind string
 
@@ -22,6 +24,7 @@ type Value struct {
 	F64 float64
 	S   string
 	B   bool
+	TS  time.Time
 }
 
 func (v Value) IsNull() bool {

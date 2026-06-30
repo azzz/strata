@@ -16,12 +16,15 @@ func (v Value) Compare(other Value) (int, error) {
 	}
 
 	switch v.Kind {
+	case KindNull:
+		return Equal, nil
 	case KindString:
 		if v.S < other.S {
 			return Less, nil
 		} else if v.S > other.S {
 			return Greater, nil
 		}
+
 		return Equal, nil
 	case KindInt64:
 		if v.I64 < other.I64 {
@@ -29,6 +32,7 @@ func (v Value) Compare(other Value) (int, error) {
 		} else if v.I64 > other.I64 {
 			return Greater, nil
 		}
+
 		return Equal, nil
 	case KindUInt64:
 		if v.U64 < other.U64 {
@@ -36,6 +40,7 @@ func (v Value) Compare(other Value) (int, error) {
 		} else if v.U64 > other.U64 {
 			return Greater, nil
 		}
+
 		return Equal, nil
 	case KindFloat64:
 		if v.F64 < other.F64 {
@@ -43,6 +48,7 @@ func (v Value) Compare(other Value) (int, error) {
 		} else if v.F64 > other.F64 {
 			return Greater, nil
 		}
+
 		return Equal, nil
 	case KindBool:
 		if !v.B && other.B {
@@ -50,6 +56,16 @@ func (v Value) Compare(other Value) (int, error) {
 		} else if v.B && !other.B {
 			return Greater, nil
 		}
+
+		return Equal, nil
+
+	case KindTimestamp:
+		if v.TS.Before(other.TS) {
+			return Less, nil
+		} else if v.TS.After(other.TS) {
+			return Greater, nil
+		}
+
 		return Equal, nil
 	default:
 		return 0, &CompareError{Left: v.Kind, Right: other.Kind}
