@@ -12,8 +12,8 @@ func NewRow(len int) Row {
 }
 
 // Get the value at the specified index in the row. Returns the value and a boolean indicating if the index is valid.
-func (r Row) Get(idx int) (Value, bool) {
-	if idx < 0 || idx >= len(r.values) {
+func (r Row) Get(idx ColumnIndex) (Value, bool) {
+	if idx < 0 || int(idx) >= len(r.values) {
 		return Value{}, false
 	}
 

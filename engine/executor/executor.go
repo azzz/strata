@@ -22,9 +22,10 @@ func (e Executor) Exec(ctx context.Context) Operator {
 
 	for _, scan := range e.Plan.Scans {
 		req := storage.ScanRequest{
-			URI:    storage.URI(scan.URI),
-			Format: scan.Format,
-			Schema: e.Schema,
+			URI:     storage.URI(scan.URI),
+			Format:  scan.Format,
+			Schema:  e.Schema,
+			Columns: e.Plan.RequestedColumns,
 		}
 
 		requests = append(requests, req)

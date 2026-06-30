@@ -264,7 +264,7 @@ func TestJSONDecoder_Decode(t *testing.T) {
 			}
 
 			for i, want := range tt.want {
-				value, ok := got.Get(i)
+				value, ok := got.Get(types.ColumnIndex(i))
 				if !ok {
 					t.Fatalf("Decode() row missing value at index %d", i)
 				}

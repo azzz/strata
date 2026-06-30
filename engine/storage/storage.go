@@ -25,9 +25,10 @@ type Scanner interface {
 
 // ScanRequest represents a request to scan data from a specific URI with a given format and schema.
 type ScanRequest struct {
-	URI    URI
-	Format Format
-	Schema types.Schema
+	URI     URI
+	Format  Format
+	Schema  types.Schema
+	Columns []types.ColumnIndex
 }
 
 type Storage interface {

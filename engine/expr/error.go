@@ -1,9 +1,13 @@
 package expr
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/azzz/strata/engine/types"
+)
 
 type MissingColumnError struct {
-	Col int
+	Col types.ColumnIndex
 }
 
 func (e *MissingColumnError) Error() string {

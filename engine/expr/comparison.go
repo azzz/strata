@@ -3,7 +3,7 @@ package expr
 import "github.com/azzz/strata/engine/types"
 
 type Eq struct {
-	Col   int
+	Col   types.ColumnIndex
 	Value types.Value
 }
 
@@ -17,7 +17,7 @@ func (e *Eq) Match(row types.Row) (bool, error) {
 }
 
 type GreaterThan struct {
-	Col   int
+	Col   types.ColumnIndex
 	Value types.Value
 }
 
@@ -31,7 +31,7 @@ func (g *GreaterThan) Match(row types.Row) (bool, error) {
 }
 
 type GreaterThanOrEqual struct {
-	Col   int
+	Col   types.ColumnIndex
 	Value types.Value
 }
 
@@ -45,7 +45,7 @@ func (g *GreaterThanOrEqual) Match(row types.Row) (bool, error) {
 }
 
 type LessThan struct {
-	Col   int
+	Col   types.ColumnIndex
 	Value types.Value
 }
 
@@ -59,7 +59,7 @@ func (l *LessThan) Match(row types.Row) (bool, error) {
 }
 
 type LessThanOrEqual struct {
-	Col   int
+	Col   types.ColumnIndex
 	Value types.Value
 }
 
@@ -72,10 +72,10 @@ func (l *LessThanOrEqual) Match(row types.Row) (bool, error) {
 	return result <= types.Equal, nil
 }
 
-func compare(row types.Row, col int, value types.Value) (int, error) {
-	v, ok := row.Get(col)
+func compare(row types.Row, ref types.ColumnIndex, value types.Value) (int, error) {
+	v, ok := row.Get(ref)
 	if !ok {
-		return 0, &MissingColumnError{Col: col}
+		return 0, &MissingColumnError{ref}
 	}
 
 	return v.Compare(value)

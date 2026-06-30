@@ -56,7 +56,7 @@ func TestJSONLScanner_Integration(t *testing.T) {
 
 		row := scanner.Row()
 		for columnIndex, wantValue := range wantRow {
-			gotValue, ok := row.Get(columnIndex)
+			gotValue, ok := row.Get(types.ColumnIndex(columnIndex))
 			if !ok {
 				t.Fatalf("Row().Get(%d) = !ok at row %d", columnIndex, rowIndex)
 			}

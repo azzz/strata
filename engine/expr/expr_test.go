@@ -106,7 +106,7 @@ func TestComparisonFilters_ReturnErrors(t *testing.T) {
 
 		var missingColumnErr *MissingColumnError
 		require.ErrorAs(t, err, &missingColumnErr)
-		assert.Equal(t, 1, missingColumnErr.Col)
+		assert.Equal(t, types.ColumnIndex(1), missingColumnErr.Col)
 	})
 
 	t.Run("incompatible value types", func(t *testing.T) {

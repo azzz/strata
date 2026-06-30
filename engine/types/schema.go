@@ -12,10 +12,10 @@ func NewSchema(columns ...Column) Schema {
 }
 
 // GetColumn retrieves a Column by its name from the Schema. It returns the Column and its index, or an empty Column and -1 if not found.
-func (s Schema) GetColumn(name string) (Column, int) {
+func (s Schema) GetColumn(name string) (Column, ColumnIndex) {
 	for i, field := range s.columns {
 		if field.Name == name {
-			return field, i
+			return field, ColumnIndex(i)
 		}
 	}
 
@@ -23,12 +23,12 @@ func (s Schema) GetColumn(name string) (Column, int) {
 }
 
 // GetColumnByIndex retrieves a Column by its index from the Schema. It returns the Column and a boolean indicating if the index is valid.
-func (s Schema) GetColumnByIndex(index int) (Column, bool) {
-	if index < 0 || index >= len(s.columns) {
+func (s Schema) GetColumnByIndex(idx ColumnIndex) (Column, bool) {
+	if idx < 0 || int(idx) >= len(s.columns) {
 		return Column{}, false
 	}
 
-	return s.columns[index], true
+	return s.columns[idx], true
 }
 
 // Columns returns a copy of the slice of Columns in the Schema.
@@ -46,3 +46,6 @@ type Column struct {
 	Name string // The name of the column
 	Type Kind   // The data type of the column, represented by the Kind type
 }
+
+// ColumnIndex is an index of a column is Schema
+type ColumnIndex int
